@@ -1,0 +1,1164 @@
+{
+  "service": {
+    "service": "chatgptapp",
+    "serviceObject": {
+      "name": "chatgptapp"
+    },
+    "provider": {
+      "name": "aws",
+      "runtime": "nodejs16.x",
+      "iam": {
+        "role": "DefaultRole"
+      },
+      "httpApi": {
+        "cors": true
+      },
+      "region": "ap-northeast-2",
+      "versionFunctions": false,
+      "stackName": "serverless-chatgptapp-backend",
+      "timeout": 10,
+      "environment": {
+        "version": "1",
+        "tersion": "1",
+        "OPENAPI_APIKEY": "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",
+        "api_gateway_id": {
+          "Ref": "HttpApi"
+        },
+        "socket_api_gateway_id": {
+          "Ref": "WebsocketsApi"
+        },
+        "region": "ap-northeast-2",
+        "response_sqs_url": {
+          "Ref": "ResponseQueue"
+        }
+      },
+      "deploymentBucket": "245556669603-chatgptapp",
+      "deploymentPrefix": "chatgptapp",
+      "stage": "dev",
+      "deploymentBucketObject": {
+        "name": "245556669603-chatgptapp",
+        "maxPreviousDeploymentArtifacts": 5,
+        "blockPublicAccess": true
+      },
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "ChatUnderscoreonConnectLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/chat_onConnect"
+            }
+          },
+          "ChatUnderscoreonDisconnectLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/chat_onDisconnect"
+            }
+          },
+          "ChatUnderscoregetLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/chat_get"
+            }
+          },
+          "ChatUnderscoreputLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/chatgpt_put"
+            }
+          },
+          "GetUnderscorechatgptUnderscoreresponseLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/chat_get_chatgpt_response"
+            }
+          },
+          "ChatUnderscoreonConnectLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "245556669603-chatgptapp",
+                "S3Key": "chatgptapp/chatgptapp/dev/1676951264888-2023-02-21T03:47:44.888Z/chatgptapp.zip"
+              },
+              "Handler": "src/lambda/chat/onConnect.handler",
+              "Runtime": "nodejs16.x",
+              "FunctionName": "chat_onConnect",
+              "MemorySize": 1024,
+              "Timeout": 10,
+              "Environment": {
+                "Variables": {
+                  "version": "1",
+                  "tersion": "1",
+                  "OPENAPI_APIKEY": "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",
+                  "api_gateway_id": {
+                    "$ref": "$[\"service\"][\"provider\"][\"environment\"][\"api_gateway_id\"]"
+                  },
+                  "socket_api_gateway_id": {
+                    "$ref": "$[\"service\"][\"provider\"][\"environment\"][\"socket_api_gateway_id\"]"
+                  },
+                  "region": "ap-northeast-2",
+                  "response_sqs_url": {
+                    "$ref": "$[\"service\"][\"provider\"][\"environment\"][\"response_sqs_url\"]"
+                  }
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "DefaultRole",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "ChatUnderscoreonConnectLogGroup",
+              "DefaultRole"
+            ]
+          },
+          "ChatUnderscoreonDisconnectLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "245556669603-chatgptapp",
+                "S3Key": "chatgptapp/chatgptapp/dev/1676951264888-2023-02-21T03:47:44.888Z/chatgptapp.zip"
+              },
+              "Handler": "src/lambda/chat/onDisconnect.handler",
+              "Runtime": "nodejs16.x",
+              "FunctionName": "chat_onDisconnect",
+              "MemorySize": 1024,
+              "Timeout": 10,
+              "Environment": {
+                "Variables": {
+                  "version": "1",
+                  "tersion": "1",
+                  "OPENAPI_APIKEY": "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",
+                  "api_gateway_id": {
+                    "$ref": "$[\"service\"][\"provider\"][\"environment\"][\"api_gateway_id\"]"
+                  },
+                  "socket_api_gateway_id": {
+                    "$ref": "$[\"service\"][\"provider\"][\"environment\"][\"socket_api_gateway_id\"]"
+                  },
+                  "region": "ap-northeast-2",
+                  "response_sqs_url": {
+                    "$ref": "$[\"service\"][\"provider\"][\"environment\"][\"response_sqs_url\"]"
+                  }
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "DefaultRole",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "ChatUnderscoreonDisconnectLogGroup",
+              "DefaultRole"
+            ]
+          },
+          "ChatUnderscoregetLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "245556669603-chatgptapp",
+                "S3Key": "chatgptapp/chatgptapp/dev/1676951264888-2023-02-21T03:47:44.888Z/chatgptapp.zip"
+              },
+              "Handler": "src/lambda/chat/get.handler",
+              "Runtime": "nodejs16.x",
+              "FunctionName": "chat_get",
+              "MemorySize": 1024,
+              "Timeout": 10,
+              "Environment": {
+                "Variables": {
+                  "version": "1",
+                  "tersion": "1",
+                  "OPENAPI_APIKEY": "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",
+                  "api_gateway_id": {
+                    "$ref": "$[\"service\"][\"provider\"][\"environment\"][\"api_gateway_id\"]"
+                  },
+                  "socket_api_gateway_id": {
+                    "$ref": "$[\"service\"][\"provider\"][\"environment\"][\"socket_api_gateway_id\"]"
+                  },
+                  "region": "ap-northeast-2",
+                  "response_sqs_url": {
+                    "$ref": "$[\"service\"][\"provider\"][\"environment\"][\"response_sqs_url\"]"
+                  }
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "DefaultRole",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "ChatUnderscoregetLogGroup",
+              "DefaultRole"
+            ]
+          },
+          "ChatUnderscoreputLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "245556669603-chatgptapp",
+                "S3Key": "chatgptapp/chatgptapp/dev/1676951264888-2023-02-21T03:47:44.888Z/chatgptapp.zip"
+              },
+              "Handler": "src/lambda/chat/put.handler",
+              "Runtime": "nodejs16.x",
+              "FunctionName": "chatgpt_put",
+              "MemorySize": 1024,
+              "Timeout": 10,
+              "Environment": {
+                "Variables": {
+                  "version": "1",
+                  "tersion": "1",
+                  "OPENAPI_APIKEY": "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",
+                  "api_gateway_id": {
+                    "$ref": "$[\"service\"][\"provider\"][\"environment\"][\"api_gateway_id\"]"
+                  },
+                  "socket_api_gateway_id": {
+                    "$ref": "$[\"service\"][\"provider\"][\"environment\"][\"socket_api_gateway_id\"]"
+                  },
+                  "region": "ap-northeast-2",
+                  "response_sqs_url": {
+                    "$ref": "$[\"service\"][\"provider\"][\"environment\"][\"response_sqs_url\"]"
+                  }
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "DefaultRole",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "ChatUnderscoreputLogGroup",
+              "DefaultRole"
+            ]
+          },
+          "GetUnderscorechatgptUnderscoreresponseLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "245556669603-chatgptapp",
+                "S3Key": "chatgptapp/chatgptapp/dev/1676951264888-2023-02-21T03:47:44.888Z/chatgptapp.zip"
+              },
+              "Handler": "src/lambda/chat/processQueue.handler",
+              "Runtime": "nodejs16.x",
+              "FunctionName": "chat_get_chatgpt_response",
+              "MemorySize": 1024,
+              "Timeout": 300,
+              "Environment": {
+                "Variables": {
+                  "version": "1",
+                  "tersion": "1",
+                  "OPENAPI_APIKEY": "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",
+                  "api_gateway_id": {
+                    "$ref": "$[\"service\"][\"provider\"][\"environment\"][\"api_gateway_id\"]"
+                  },
+                  "socket_api_gateway_id": {
+                    "$ref": "$[\"service\"][\"provider\"][\"environment\"][\"socket_api_gateway_id\"]"
+                  },
+                  "region": "ap-northeast-2",
+                  "response_sqs_url": {
+                    "$ref": "$[\"service\"][\"provider\"][\"environment\"][\"response_sqs_url\"]"
+                  }
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "DefaultRole",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "GetUnderscorechatgptUnderscoreresponseLogGroup",
+              "DefaultRole"
+            ]
+          },
+          "WebsocketsApi": {
+            "Type": "AWS::ApiGatewayV2::Api",
+            "Properties": {
+              "Name": "dev-chatgptapp-websockets",
+              "RouteSelectionExpression": "$request.body.action",
+              "Description": "Serverless Websockets",
+              "ProtocolType": "WEBSOCKET"
+            }
+          },
+          "ChatUnderscoreonConnectWebsocketsIntegration": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "WebsocketsApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":apigateway:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":lambda:path/2015-03-31/functions/",
+                    {
+                      "Fn::GetAtt": [
+                        "ChatUnderscoreonConnectLambdaFunction",
+                        "Arn"
+                      ]
+                    },
+                    "/invocations"
+                  ]
+                ]
+              }
+            }
+          },
+          "ChatUnderscoreonDisconnectWebsocketsIntegration": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "WebsocketsApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":apigateway:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":lambda:path/2015-03-31/functions/",
+                    {
+                      "Fn::GetAtt": [
+                        "ChatUnderscoreonDisconnectLambdaFunction",
+                        "Arn"
+                      ]
+                    },
+                    "/invocations"
+                  ]
+                ]
+              }
+            }
+          },
+          "ChatUnderscoreonConnectLambdaPermissionWebsockets": {
+            "Type": "AWS::Lambda::Permission",
+            "DependsOn": [
+              "WebsocketsApi",
+              "ChatUnderscoreonConnectLambdaFunction"
+            ],
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "ChatUnderscoreonConnectLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com"
+            }
+          },
+          "ChatUnderscoreonDisconnectLambdaPermissionWebsockets": {
+            "Type": "AWS::Lambda::Permission",
+            "DependsOn": [
+              "WebsocketsApi",
+              "ChatUnderscoreonDisconnectLambdaFunction"
+            ],
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "ChatUnderscoreonDisconnectLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com"
+            }
+          },
+          "SconnectWebsocketsRoute": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "WebsocketsApi"
+              },
+              "RouteKey": "$connect",
+              "AuthorizationType": "NONE",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "ChatUnderscoreonConnectWebsocketsIntegration"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          "SdisconnectWebsocketsRoute": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "WebsocketsApi"
+              },
+              "RouteKey": "$disconnect",
+              "AuthorizationType": "NONE",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "ChatUnderscoreonDisconnectWebsocketsIntegration"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          "WebsocketsDeploymentStage": {
+            "Type": "AWS::ApiGatewayV2::Stage",
+            "Properties": {
+              "ApiId": {
+                "Ref": "WebsocketsApi"
+              },
+              "StageName": "dev",
+              "Description": "Serverless Websockets",
+              "DeploymentId": {
+                "Ref": "WebsocketsDeploymentcB85aptWwUPNaOrO7YTy9zn4LIwp6rd31tkVekRZFU"
+              }
+            }
+          },
+          "WebsocketsDeploymentcB85aptWwUPNaOrO7YTy9zn4LIwp6rd31tkVekRZFU": {
+            "Type": "AWS::ApiGatewayV2::Deployment",
+            "DependsOn": [
+              "SconnectWebsocketsRoute",
+              "SdisconnectWebsocketsRoute"
+            ],
+            "Properties": {
+              "ApiId": {
+                "Ref": "WebsocketsApi"
+              },
+              "Description": "Serverless Websockets"
+            }
+          },
+          "GetUnderscorechatgptUnderscoreresponseEventSourceMappingSQSResponseQueue": {
+            "Type": "AWS::Lambda::EventSourceMapping",
+            "DependsOn": [
+              "DefaultRole"
+            ],
+            "Properties": {
+              "BatchSize": 1,
+              "EventSourceArn": {
+                "Fn::GetAtt": [
+                  "ResponseQueue",
+                  "Arn"
+                ]
+              },
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "GetUnderscorechatgptUnderscoreresponseLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Enabled": true
+            }
+          },
+          "HttpApi": {
+            "Type": "AWS::ApiGatewayV2::Api",
+            "Properties": {
+              "Name": "dev-chatgptapp",
+              "ProtocolType": "HTTP",
+              "CorsConfiguration": {
+                "AllowHeaders": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent",
+                  "X-Amzn-Trace-Id"
+                ],
+                "AllowMethods": [
+                  "OPTIONS",
+                  "GET",
+                  "PUT"
+                ],
+                "AllowOrigins": [
+                  "*"
+                ]
+              }
+            }
+          },
+          "HttpApiStage": {
+            "Type": "AWS::ApiGatewayV2::Stage",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "StageName": "$default",
+              "AutoDeploy": true,
+              "DefaultRouteSettings": {
+                "DetailedMetricsEnabled": false
+              }
+            }
+          },
+          "ChatUnderscoregetLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "ChatUnderscoregetLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationChatUnderscoreget": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"ChatUnderscoregetLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRouteGetDevChat": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "GET /dev/chat",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationChatUnderscoreget"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationChatUnderscoreget"
+          },
+          "ChatUnderscoreputLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "ChatUnderscoreputLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationChatUnderscoreput": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"ChatUnderscoreputLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRoutePutDevChat": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "PUT /dev/chat",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationChatUnderscoreput"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationChatUnderscoreput"
+          },
+          "ResponseQueue": {
+            "Type": "AWS::SQS::Queue",
+            "Properties": {
+              "QueueName": "chatgptapp-response-queue",
+              "VisibilityTimeout": 300
+            }
+          },
+          "DefaultRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "RoleName": "chatgptapp-lambda-role",
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                        "lambda.amazonaws.com"
+                      ]
+                    },
+                    "Action": "sts:AssumeRole"
+                  }
+                ]
+              },
+              "ManagedPolicyArns": [
+                "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
+              ],
+              "Policies": [
+                {
+                  "PolicyName": "myPolicyName",
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "sqs:*",
+                          "logs:*",
+                          "execute-api:*"
+                        ],
+                        "Resource": "*"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "messageTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "TableName": "chatgptapp-chat-messages",
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "room_id",
+                  "AttributeType": "S"
+                },
+                {
+                  "AttributeName": "timestamp",
+                  "AttributeType": "N"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "room_id",
+                  "KeyType": "HASH"
+                },
+                {
+                  "AttributeName": "timestamp",
+                  "KeyType": "RANGE"
+                }
+              ],
+              "BillingMode": "PAY_PER_REQUEST"
+            }
+          },
+          "userListTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "TableName": "chatgptapp-userlist",
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "connection_id",
+                  "AttributeType": "S"
+                },
+                {
+                  "AttributeName": "room_id",
+                  "AttributeType": "S"
+                },
+                {
+                  "AttributeName": "user_id",
+                  "AttributeType": "S"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "connection_id",
+                  "KeyType": "HASH"
+                }
+              ],
+              "BillingMode": "PAY_PER_REQUEST",
+              "GlobalSecondaryIndexes": [
+                {
+                  "IndexName": "room_id-user_id-index",
+                  "KeySchema": [
+                    {
+                      "AttributeName": "room_id",
+                      "KeyType": "HASH"
+                    },
+                    {
+                      "AttributeName": "user_id",
+                      "KeyType": "RANGE"
+                    }
+                  ],
+                  "Projection": {
+                    "ProjectionType": "ALL"
+                  }
+                }
+              ]
+            }
+          },
+          "ApigatewayParms": {
+            "Type": "AWS::SSM::Parameter",
+            "Properties": {
+              "Name": "/chatgptapp/api_gateway_id",
+              "Type": "String",
+              "Value": {
+                "Ref": "HttpApi"
+              },
+              "Description": "ApiGatewayId"
+            }
+          },
+          "SocketApigatewayParms": {
+            "Type": "AWS::SSM::Parameter",
+            "Properties": {
+              "Name": "/chatgptapp/socket_api_gateway_id",
+              "Type": "String",
+              "Value": {
+                "Fn::Join": [
+                  ",",
+                  [
+                    {
+                      "Ref": "WebsocketsApi"
+                    }
+                  ]
+                ]
+              },
+              "Description": "WebsocketsApi"
+            }
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": "245556669603-chatgptapp",
+            "Export": {
+              "Name": "sls-chatgptapp-dev-ServerlessDeploymentBucketName"
+            }
+          },
+          "ServiceEndpointWebsocket": {
+            "Description": "URL of the service endpoint",
+            "Value": {
+              "Fn::Join": [
+                "",
+                [
+                  "wss://",
+                  {
+                    "Ref": "WebsocketsApi"
+                  },
+                  ".execute-api.",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ".",
+                  {
+                    "Ref": "AWS::URLSuffix"
+                  },
+                  "/dev"
+                ]
+              ]
+            },
+            "Export": {
+              "Name": "sls-chatgptapp-dev-ServiceEndpointWebsocket"
+            }
+          },
+          "HttpApiId": {
+            "Description": "Id of the HTTP API",
+            "Value": {
+              "Ref": "HttpApi"
+            },
+            "Export": {
+              "Name": "sls-chatgptapp-dev-HttpApiId"
+            }
+          },
+          "HttpApiUrl": {
+            "Description": "URL of the HTTP API",
+            "Value": {
+              "Fn::Join": [
+                "",
+                [
+                  "https://",
+                  {
+                    "Ref": "HttpApi"
+                  },
+                  ".execute-api.",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ".",
+                  {
+                    "Ref": "AWS::URLSuffix"
+                  }
+                ]
+              ]
+            },
+            "Export": {
+              "Name": "sls-chatgptapp-dev-HttpApiUrl"
+            }
+          }
+        }
+      },
+      "vpc": {}
+    },
+    "plugins": [
+      "serverless-deployment-bucket"
+    ],
+    "pluginsData": {},
+    "functions": {
+      "chat_onConnect": {
+        "name": "chat_onConnect",
+        "handler": "src/lambda/chat/onConnect.handler",
+        "events": [
+          {
+            "websocket": {
+              "route": "$connect"
+            }
+          }
+        ],
+        "package": {},
+        "memory": 1024,
+        "timeout": 10,
+        "runtime": "nodejs16.x",
+        "vpc": {}
+      },
+      "chat_onDisconnect": {
+        "name": "chat_onDisconnect",
+        "handler": "src/lambda/chat/onDisconnect.handler",
+        "events": [
+          {
+            "websocket": {
+              "route": "$disconnect"
+            }
+          }
+        ],
+        "package": {},
+        "memory": 1024,
+        "timeout": 10,
+        "runtime": "nodejs16.x",
+        "vpc": {}
+      },
+      "chat_get": {
+        "name": "chat_get",
+        "handler": "src/lambda/chat/get.handler",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/dev/chat",
+              "method": "get"
+            },
+            "resolvedMethod": "GET",
+            "resolvedPath": "/dev/chat"
+          }
+        ],
+        "package": {},
+        "memory": 1024,
+        "timeout": 10,
+        "runtime": "nodejs16.x",
+        "vpc": {}
+      },
+      "chat_put": {
+        "name": "chatgpt_put",
+        "handler": "src/lambda/chat/put.handler",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/dev/chat",
+              "method": "put"
+            },
+            "resolvedMethod": "PUT",
+            "resolvedPath": "/dev/chat"
+          }
+        ],
+        "package": {},
+        "memory": 1024,
+        "timeout": 10,
+        "runtime": "nodejs16.x",
+        "vpc": {}
+      },
+      "get_chatgpt_response": {
+        "name": "chat_get_chatgpt_response",
+        "handler": "src/lambda/chat/processQueue.handler",
+        "events": [
+          {
+            "sqs": {
+              "arn": {
+                "Fn::GetAtt": [
+                  "ResponseQueue",
+                  "Arn"
+                ]
+              },
+              "batchSize": 1
+            }
+          }
+        ],
+        "timeout": 300,
+        "package": {},
+        "memory": 1024,
+        "runtime": "nodejs16.x",
+        "vpc": {}
+      }
+    },
+    "resources": {
+      "Resources": {
+        "ResponseQueue": {
+          "Type": "AWS::SQS::Queue",
+          "Properties": {
+            "QueueName": "chatgptapp-response-queue",
+            "VisibilityTimeout": 300
+          }
+        },
+        "DefaultRole": {
+          "Type": "AWS::IAM::Role",
+          "Properties": {
+            "RoleName": "chatgptapp-lambda-role",
+            "AssumeRolePolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Principal": {
+                    "Service": [
+                      "lambda.amazonaws.com"
+                    ]
+                  },
+                  "Action": "sts:AssumeRole"
+                }
+              ]
+            },
+            "ManagedPolicyArns": [
+              "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
+            ],
+            "Policies": [
+              {
+                "PolicyName": "myPolicyName",
+                "PolicyDocument": {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                    {
+                      "Effect": "Allow",
+                      "Action": [
+                        "sqs:*",
+                        "logs:*",
+                        "execute-api:*"
+                      ],
+                      "Resource": "*"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "messageTable": {
+          "Type": "AWS::DynamoDB::Table",
+          "Properties": {
+            "TableName": "chatgptapp-chat-messages",
+            "AttributeDefinitions": [
+              {
+                "AttributeName": "room_id",
+                "AttributeType": "S"
+              },
+              {
+                "AttributeName": "timestamp",
+                "AttributeType": "N"
+              }
+            ],
+            "KeySchema": [
+              {
+                "AttributeName": "room_id",
+                "KeyType": "HASH"
+              },
+              {
+                "AttributeName": "timestamp",
+                "KeyType": "RANGE"
+              }
+            ],
+            "BillingMode": "PAY_PER_REQUEST"
+          }
+        },
+        "userListTable": {
+          "Type": "AWS::DynamoDB::Table",
+          "Properties": {
+            "TableName": "chatgptapp-userlist",
+            "AttributeDefinitions": [
+              {
+                "AttributeName": "connection_id",
+                "AttributeType": "S"
+              },
+              {
+                "AttributeName": "room_id",
+                "AttributeType": "S"
+              },
+              {
+                "AttributeName": "user_id",
+                "AttributeType": "S"
+              }
+            ],
+            "KeySchema": [
+              {
+                "AttributeName": "connection_id",
+                "KeyType": "HASH"
+              }
+            ],
+            "BillingMode": "PAY_PER_REQUEST",
+            "GlobalSecondaryIndexes": [
+              {
+                "IndexName": "room_id-user_id-index",
+                "KeySchema": [
+                  {
+                    "AttributeName": "room_id",
+                    "KeyType": "HASH"
+                  },
+                  {
+                    "AttributeName": "user_id",
+                    "KeyType": "RANGE"
+                  }
+                ],
+                "Projection": {
+                  "ProjectionType": "ALL"
+                }
+              }
+            ]
+          }
+        },
+        "ApigatewayParms": {
+          "Type": "AWS::SSM::Parameter",
+          "Properties": {
+            "Name": "/chatgptapp/api_gateway_id",
+            "Type": "String",
+            "Value": {
+              "Ref": "HttpApi"
+            },
+            "Description": "ApiGatewayId"
+          }
+        },
+        "SocketApigatewayParms": {
+          "Type": "AWS::SSM::Parameter",
+          "Properties": {
+            "Name": "/chatgptapp/socket_api_gateway_id",
+            "Type": "String",
+            "Value": {
+              "Fn::Join": [
+                ",",
+                [
+                  {
+                    "Ref": "WebsocketsApi"
+                  }
+                ]
+              ]
+            },
+            "Description": "WebsocketsApi"
+          }
+        }
+      },
+      "Outputs": {}
+    },
+    "configValidationMode": "warn",
+    "serviceFilename": "serverless.yml",
+    "initialServerlessConfig": {
+      "service": "chatgptapp",
+      "app": "chatgptapp",
+      "provider": {
+        "$ref": "$[\"service\"][\"provider\"]"
+      },
+      "resources": {
+        "$ref": "$[\"service\"][\"resources\"]"
+      },
+      "plugins": {
+        "$ref": "$[\"service\"][\"plugins\"]"
+      },
+      "functions": {
+        "$ref": "$[\"service\"][\"functions\"]"
+      }
+    },
+    "app": "chatgptapp",
+    "layers": {},
+    "isDashboardMonitoringPreconfigured": false,
+    "artifact": "/home/ec2-user/chatGPT/demo-chatgpt-backend/.serverless/chatgptapp.zip"
+  },
+  "package": {
+    "artifactDirectoryName": "chatgptapp/chatgptapp/dev/1676951264888-2023-02-21T03:47:44.888Z",
+    "artifact": "chatgptapp.zip"
+  }
+}

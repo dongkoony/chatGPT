@@ -17,7 +17,8 @@ provider:
   environment:
     version: ${opt:ver, "1"}
     tersion: ${opt:ter, "1"}
-    OPENAPI_APIKEY: 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
+# ChatGPT-APT-Key Create 23.02.21
+    OPENAPI_APIKEY: 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
     api_gateway_id:
       Ref: HttpApi
     socket_api_gateway_id:
