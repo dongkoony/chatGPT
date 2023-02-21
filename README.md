@@ -1,27 +1,3 @@
 # chatGPT
 
-ChatGPT Readme
-
-front-end / react, css
-
-back-end / node.js(V.16.x), Dynamo DB(NoSQL), AWS Lambda, Serverless, AWS CLI(aws configure IAM Admin access)
-
-Lambda / region = ap-northeast-2(서울), Node.js(16.x)
-
-
-
-===========================================
-
-npm install -g yarn
-
-npm install -g serverless
-
-===========================================
-
-back-end
-$ yarn
-
-===========================================
-front-end
-$ yarn
-$ yarn start
+![shindk-gpt](https://user-images.githubusercontent.com/109497684/220277598-0525a9eb-551e-43e6-b844-f651b0582c7f.png)
